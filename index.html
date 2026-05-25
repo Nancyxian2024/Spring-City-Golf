@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Spring City · 专属定制与采购指标确认单</title>
+<link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600&display=swap" rel="stylesheet">
+<style>
+:root{--acc:#722F37;--acc-light:#fdf8f8;}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{min-height:100vh;background-color:#1a2e1a;background-image:linear-gradient(rgba(0,0,0,0.45),rgba(0,0,0,0.45)),url('https://truekey-masscms-prod.oss-cn-shanghai.aliyuncs.com/P54282/64389e28-6d6f-4dbc-baf1-4da79299ccfb.jpg');background-size:cover;background-position:center;background-attachment:fixed;padding:24px 16px 48px;display:flex;justify-content:center;align-items:flex-start;}
+@media(max-width:480px){body{padding:0 0 40px;background-attachment:scroll;}}
+.w{font-family:'Noto Sans SC',sans-serif;width:100%;max-width:560px;background:#fff;border-radius:16px;overflow:hidden;box-shadow:0 24px 80px rgba(0,0,0,0.5);}
+@media(max-width:480px){.w{border-radius:0;box-shadow:none;}}
+.hdr{background:linear-gradient(160deg,#0d1a0d 0%,#1a0a0d 50%,#2d1217 100%);color:#fff;padding:36px 24px 26px;text-align:center;position:relative;overflow:hidden;}
+.hdr-bg-img{position:absolute;inset:0;background-image:url('https://truekey-masscms-prod.oss-cn-shanghai.aliyuncs.com/P54282/64389e28-6d6f-4dbc-baf1-4da79299ccfb.jpg');background-size:cover;background-position:center;opacity:.2;}
+.hdr>*{position:relative;z-index:1;}
+.hdr-en{font-size:22px;letter-spacing:6px;font-weight:700;margin-bottom:4px;}
+.hdr-cn{font-size:11px;color:#c0c0c0;letter-spacing:1.5px;}
+.hdr-badge{display:inline-block;font-size:10px;background:rgba(114,47,55,.65);color:#f0c0c5;padding:3px 14px;border-radius:20px;margin-top:10px;letter-spacing:1px;}
+.hdr-ver{font-size:10px;color:#888;margin-top:6px;}
+.body-pad{padding:24px 22px;background:#fff;}
+@media(max-width:480px){.body-pad{padding:18px 15px;}}
+.hdr-intro{background:#f7f3f0;border-radius:10px;padding:14px 16px;margin-bottom:22px;font-size:12px;color:#444;line-height:1.7;border-left:3px solid var(--acc);}
+.hdr-intro strong{color:#1a1a1a;}
+.sec{margin-bottom:24px;}
+.sec-label{font-size:10px;letter-spacing:2px;font-weight:700;color:var(--acc);text-transform:uppercase;margin-bottom:12px;display:flex;align-items:center;gap:8px;}
+.sec-label::after{content:'';flex:1;height:.5px;background:var(--acc);opacity:.3;}
+.q{font-size:14px;font-weight:600;color:#1a1a1a;margin-bottom:8px;line-height:1.6;}
+.hint{font-size:11px;color:#666;margin-bottom:10px;margin-top:-5px;line-height:1.5;}
+.sub-label{font-size:11px;font-weight:700;color:#666;letter-spacing:1px;margin:14px 0 7px;}
+.opts{display:flex;flex-direction:column;gap:8px;}
+.opt{background:#fff;border:1px solid #e0e0e0;border-radius:12px;padding:12px 13px 12px 40px;position:relative;cursor:pointer;transition:border-color .2s,background .2s;box-shadow:0 1px 3px rgba(0,0,0,.06);}
+.opt .oc{position:absolute;left:12px;top:15px;width:16px;height:16px;border-radius:50%;border:1.5px solid #ccc;transition:all .2s;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.opt.sel{border-color:var(--acc);background:var(--acc-light);}
+.opt.sel .oc{background:var(--acc);border-color:var(--acc);}
+.opt.sel .oc::after{content:'';width:3px;height:6px;border:solid #fff;border-width:0 1.5px 1.5px 0;transform:rotate(45deg);margin-top:-1px;}
+.opt .ot{font-weight:700;font-size:13px;color:#1a1a1a;margin-bottom:3px;line-height:1.4;}
+.opt.sel .ot{color:var(--acc);}
+.opt .od{font-size:12px;color:#555;line-height:1.5;}
+.rec-tag{display:inline-block;font-size:10px;background:#1a1a1a;color:#fff;padding:1px 5px;border-radius:3px;margin-left:5px;}
+.mat-pill-row{display:flex;flex-wrap:wrap;gap:4px;margin:6px 0 3px;}
+.mat-pill{font-size:10px;background:#f0f0f0;color:#555;padding:2px 7px;border-radius:20px;border:.5px solid #ddd;}
+.opt.sel .mat-pill{background:rgba(114,47,55,.08);color:var(--acc);border-color:rgba(114,47,55,.2);}
+.mat-warn{font-size:11px;color:#b07000;background:#fffbf0;border:.5px solid #e8d8a0;border-radius:4px;padding:5px 8px;margin-top:5px;line-height:1.5;}
+.sub-opts-wrap{overflow:hidden;max-height:0;transition:max-height .35s ease,opacity .3s;opacity:0;pointer-events:none;}
+.sub-opts-wrap.open{max-height:500px;opacity:1;pointer-events:auto;}
+.sub-opts{display:flex;flex-direction:column;gap:6px;margin-top:9px;}
+.sub-chip{background:#f5f5f5;border:1px solid #ddd;border-radius:8px;padding:8px 9px 8px 30px;cursor:pointer;font-size:12px;position:relative;line-height:1.4;transition:border-color .2s,background .2s;}
+.sub-chip .sc{position:absolute;left:8px;top:50%;transform:translateY(-50%);width:13px;height:13px;border-radius:3px;border:1.5px solid #ccc;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:all .2s;}
+.sub-chip.sel{border-color:var(--acc);background:var(--acc-light);}
+.sub-chip.sel .sc{background:var(--acc);border-color:var(--acc);}
+.sub-chip.sel .sc::after{content:'';width:3px;height:5px;border:solid #fff;border-width:0 1.5px 1.5px 0;transform:rotate(45deg);margin-top:-1px;}
+.sub-chip .sl{font-weight:600;color:#1a1a1a;font-size:12px;}
+.sub-chip.sel .sl{color:var(--acc);}
+.sub-chip .sd{color:#666;font-size:11px;margin-top:1px;}
+.vm-card{border:1px solid #e0e0e0;border-radius:10px;overflow:hidden;margin-top:8px;background:#fff;}
+.vm-row{display:flex;}
+.vm-half{flex:1;padding:10px;border-right:1px solid #e0e0e0;}
+.vm-half:last-child{border:none;}
+.vm-title{font-size:10px;font-weight:700;color:var(--acc);letter-spacing:1px;margin-bottom:6px;text-transform:uppercase;}
+.vm-swatch-row{display:flex;gap:4px;margin-bottom:6px;}
+.vm-swatch{width:20px;height:20px;border-radius:4px;border:.5px solid #ddd;}
+.vm-item{font-size:11px;color:#555;padding-left:9px;position:relative;margin-bottom:2px;line-height:1.4;}
+.vm-item::before{content:'·';position:absolute;left:0;color:var(--acc);}
+.color-matrix{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin-top:4px;}
+.color-card{border:1px solid #e0e0e0;border-radius:8px;padding:10px 10px 10px 34px;cursor:pointer;transition:border-color .2s,background .2s;position:relative;background:#fff;box-shadow:0 1px 3px rgba(0,0,0,.05);}
+.color-card .cc{position:absolute;left:10px;top:50%;transform:translateY(-50%);width:13px;height:13px;border-radius:3px;border:1.5px solid #ccc;flex-shrink:0;transition:all .2s;display:flex;align-items:center;justify-content:center;}
+.color-card.sel{border-color:var(--acc);background:var(--acc-light);}
+.color-card.sel .cc{background:var(--acc);border-color:var(--acc);}
+.color-card.sel .cc::after{content:'';width:3px;height:5px;border:solid #fff;border-width:0 1.5px 1.5px 0;transform:rotate(45deg);margin-top:-1px;}
+.color-dot{width:9px;height:9px;border-radius:50%;display:inline-block;margin-right:4px;vertical-align:middle;border:.5px solid rgba(0,0,0,.08);}
+.color-name{font-size:12px;font-weight:600;color:#1a1a1a;line-height:1.4;}
+.color-card.sel .color-name{color:var(--acc);}
+.color-sub{font-size:10px;color:#666;display:block;margin-top:2px;}
+.ratio-wrap{background:#f7f7f7;border:1px solid #e0e0e0;border-radius:12px;padding:14px;}
+.ratio-title{font-size:12px;font-weight:700;color:#1a1a1a;margin-bottom:3px;}
+.ratio-desc{font-size:11px;color:#666;margin-bottom:10px;line-height:1.5;}
+.ratio-slider-row{display:flex;align-items:center;gap:8px;}
+.ratio-slider-row input[type=range]{flex:1;accent-color:var(--acc);}
+.ratio-val{font-size:14px;font-weight:700;color:var(--acc);width:34px;text-align:right;flex-shrink:0;}
+.ratio-balance{display:flex;gap:5px;margin-top:10px;}
+.rb-seg{height:7px;border-radius:4px;transition:flex .3s;}
+.rb-seg-a{background:var(--acc);}
+.rb-seg-b{background:#ccc;}
+.rb-legend{display:flex;gap:14px;margin-top:6px;}
+.rb-leg-item{display:flex;align-items:center;gap:4px;font-size:11px;color:#555;}
+.rb-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0;}
+.persona-card{border:1px solid #e0e0e0;border-radius:8px;overflow:hidden;margin-top:8px;background:#fff;}
+.pc-row{display:flex;}
+.pc-half{flex:1;padding:10px;border-right:1px solid #e0e0e0;}
+.pc-half:last-child{border:none;}
+.pc-label{font-size:10px;font-weight:700;color:var(--acc);letter-spacing:1px;margin-bottom:5px;text-transform:uppercase;}
+.pc-item{font-size:11px;color:#555;padding-left:8px;position:relative;margin-bottom:2px;line-height:1.4;}
+.pc-item::before{content:'·';position:absolute;left:0;color:var(--acc);}
+.multi-opts{display:flex;flex-direction:column;gap:7px;}
+.mopt{background:#fff;border:1px solid #e0e0e0;border-radius:12px;padding:11px 13px 11px 40px;position:relative;cursor:pointer;transition:border-color .2s,background .2s;box-shadow:0 1px 3px rgba(0,0,0,.05);}
+.mopt .mc{position:absolute;left:12px;top:50%;transform:translateY(-50%);width:16px;height:16px;border-radius:4px;border:1.5px solid #ccc;transition:all .2s;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.mopt.sel{border-color:var(--acc);background:var(--acc-light);}
+.mopt.sel .mc{background:var(--acc);border-color:var(--acc);}
+.mopt.sel .mc::after{content:'';width:3px;height:6px;border:solid #fff;border-width:0 1.5px 1.5px 0;transform:rotate(45deg);margin-top:-1px;}
+.mopt .mt{font-weight:600;font-size:13px;color:#1a1a1a;line-height:1.3;}
+.mopt.sel .mt{color:var(--acc);}
+.mopt .md{font-size:11px;color:#555;margin-top:2px;line-height:1.4;}
+.other-input{width:100%;margin-top:8px;padding:8px 10px;font-size:12px;border:1px solid #ddd;border-radius:8px;background:#fff;color:#1a1a1a;display:none;}
+.other-input.show{display:block;}
+.protocol-card{background:linear-gradient(135deg,rgba(114,47,55,.05),rgba(74,27,12,.03));border:1px solid rgba(114,47,55,.2);border-radius:12px;padding:14px;margin-top:8px;}
+.proto-title{font-size:12px;font-weight:700;color:var(--acc);margin-bottom:7px;display:flex;align-items:center;gap:5px;}
+.proto-step{display:flex;gap:8px;margin-bottom:7px;align-items:flex-start;}
+.proto-num{width:18px;height:18px;border-radius:50%;background:var(--acc);color:#fff;font-size:10px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px;}
+.proto-text{font-size:11px;color:#555;line-height:1.5;}
+.proto-text strong{color:#1a1a1a;}
+.proto-agree{display:flex;align-items:center;gap:9px;margin-top:10px;padding-top:10px;border-top:.5px solid rgba(114,47,55,.15);cursor:pointer;}
+.proto-cb{width:17px;height:17px;border-radius:4px;border:1.5px solid #ccc;flex-shrink:0;display:flex;align-items:center;justify-content:center;transition:all .2s;}
+.proto-agree.sel .proto-cb{background:var(--acc);border-color:var(--acc);}
+.proto-agree.sel .proto-cb::after{content:'';width:3px;height:6px;border:solid #fff;border-width:0 1.5px 1.5px 0;transform:rotate(45deg);margin-top:-1px;}
+.proto-agree-text{font-size:12px;color:#1a1a1a;font-weight:500;line-height:1.4;}
+.birdie-preview{background:linear-gradient(135deg,#1a1a1a,#2d1217);border-radius:8px;padding:14px;margin-top:8px;display:flex;align-items:center;gap:12px;}
+.birdie-icon{width:44px;height:44px;border-radius:50%;border:1px solid rgba(255,255,255,.2);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:20px;}
+.birdie-text-wrap{flex:1;}
+.birdie-title{font-size:12px;font-weight:700;color:#fff;margin-bottom:3px;}
+.birdie-desc{font-size:11px;color:#a0a0a0;line-height:1.5;}
+.birdie-spec{font-size:10px;color:rgba(240,192,197,.8);background:rgba(114,47,55,.3);padding:2px 7px;border-radius:3px;display:inline-block;margin-top:4px;}
+.signature-block{text-align:center;padding:28px 0 10px;border-top:1px solid #e0e0e0;margin-top:4px;background:#fff;}
+.sig-label{font-size:10px;letter-spacing:2px;color:#888;text-transform:uppercase;margin-bottom:12px;}
+.sig-name{font-family:'Dancing Script',cursive;font-size:34px;color:var(--acc);line-height:1.2;margin-bottom:4px;}
+.sig-line{width:180px;height:.5px;background:#ddd;margin:8px auto;}
+.sig-title{font-size:11px;color:#888;letter-spacing:1px;line-height:1.8;}
+.submit-btn{width:100%;background:#1a1a1a;color:#fff;border:none;padding:16px;font-size:15px;font-weight:700;border-radius:30px;cursor:pointer;letter-spacing:1px;margin-top:8px;transition:background .2s;}
+.submit-btn:hover{background:var(--acc);}
+.submit-btn:disabled{background:#bbb;cursor:default;}
+.success{display:none;padding:16px 0;}
+.success.show{display:block;}
+.main.hide{display:none;}
+.result-hdr{text-align:center;margin-bottom:18px;}
+.result-icon{width:52px;height:52px;border-radius:50%;border:1.5px solid var(--acc);display:flex;align-items:center;justify-content:center;margin:0 auto 14px;}
+.result-box{background:#1a1a1a;color:#fff;border-radius:12px;padding:18px;margin-bottom:10px;}
+.rb-section{font-size:10px;letter-spacing:2px;color:#555;text-transform:uppercase;margin:12px 0 7px;padding-bottom:3px;border-bottom:.5px solid rgba(255,255,255,.08);}
+.rb-section:first-child{margin-top:0;}
+.rb-row{display:flex;justify-content:space-between;align-items:flex-start;font-size:11px;padding:4px 0;border-bottom:.5px solid rgba(255,255,255,.05);}
+.rb-row:last-child{border:none;}
+.rb-k{color:#888;flex-shrink:0;width:88px;}
+.rb-v{color:#fff;font-weight:500;text-align:right;flex:1;}
+.alert-box{background:rgba(114,47,55,.08);border:1px solid rgba(114,47,55,.2);border-radius:8px;padding:12px 13px;margin-top:10px;font-size:12px;color:#1a1a1a;line-height:1.7;}
+.alert-box strong{color:var(--acc);}
+.back-btn{background:none;border:1px solid #ddd;color:#1a1a1a;padding:11px;width:100%;border-radius:30px;cursor:pointer;font-size:13px;margin-top:7px;}
+.email-status{text-align:center;font-size:12px;margin-top:10px;padding:8px;border-radius:8px;}
+.email-status.sending{color:#666;background:#f5f5f5;}
+.email-status.ok{color:#2d7a3a;background:#f0faf2;border:.5px solid #b8dfc0;}
+.email-status.fail{color:#a00;background:#fff0f0;border:.5px solid #f0b8b8;}
+</style>
+</head>
+<body>
+<div class="w">
+<div class="main" id="mainForm">
+<div class="hdr">
+  <div class="hdr-bg-img"></div>
+  <div class="hdr-en">SPRING CITY</div>
+  <div class="hdr-cn">Resort to City 2026 · 春城高尔夫自营服饰系列</div>
+  <div class="hdr-badge">专属定制与采购指标确认单</div>
+  <div class="hdr-ver">v3.7 · 提交即发邮件</div>
+</div>
+<div class="body-pad">
+<div class="hdr-intro"><strong>尊贵的春城高尔夫管理团队：</strong><br>为确保本次自营服装系列在开发体量、面料质感、视觉调性及财务预算上完全符合吉宝集团精细化运营预期，请贵方协助圈选以下指标。我方将以此为底层依据，为您定向输出专属技术标3D设计图包。</div>
+
+<div class="sec">
+  <div class="sec-label">一 / Look & SKU 开发体量</div>
+  <div class="q">本期自营系列期望呈现的总 Look 数量与 SKU 规模？</div>
+  <div class="hint">* 直接决定前端研发图纸体量及后端供应链排期</div>
+  <div class="opts" data-g="q_look">
+    <div class="opt" onclick="sel(this,'q_look')"><div class="oc"></div><div class="ot">A &nbsp;精简胶囊系列</div><div class="od">男女装各5套Look · <strong>≤15 SKU核心包</strong> · 聚焦核心爆款，供应链快反周期短</div></div>
+    <div class="opt" onclick="sel(this,'q_look')"><div class="oc"></div><div class="ot">B &nbsp;季度标准系列</div><div class="od">男女装各10套Look · <strong>约30 SKU标准包</strong> · 覆盖球场挥杆与会所商务全场景</div></div>
+    <div class="opt" onclick="sel(this,'q_look')"><div class="oc"></div><div class="ot">C &nbsp;年度旗舰系列</div><div class="od">男女装各20套Look · <strong>45–50 SKU旗舰包</strong>（含商务线+配饰+文创周边）</div></div>
+    <div class="opt" onclick="sel(this,'q_look')"><div class="oc"></div><div class="ot">D &nbsp;授权设计师自由提案</div><div class="od">由总设计师根据Pro Shop货架陈列现状及会员真实画像进行最佳配比提案</div></div>
+  </div>
+</div>
+
+<div class="sec">
+  <div class="sec-label">二 / 视觉陈列调性 Visual Merchandising</div>
+  <div class="q">本季商品视觉调性的定位偏好？</div>
+  <div class="opts" data-g="q_vm">
+    <div class="opt" onclick="sel(this,'q_vm')"><div class="oc"></div><div class="ot">A &nbsp;严谨职业制服感</div><div class="od">上下身倾向统一色彩/同色系套装，传统规范，具有球场官方职业感</div></div>
+    <div class="opt" onclick="sel(this,'q_vm')"><div class="oc"></div><div class="ot">B &nbsp;现代时髦高奢感 <span class="rec-tag">设计师推荐</span></div><div class="od">全面引入<strong>"上深下浅"黄金视觉公式</strong>——上衣深色矩阵，下装高级白主轴，在果岭绿草映衬下形成极干净挺拔的老钱度假质感</div><div class="vm-card" style="margin-top:10px;"><div class="vm-row"><div class="vm-half"><div class="vm-title">上装 深色矩阵</div><div class="vm-swatch-row"><div class="vm-swatch" style="background:#1a2744;"></div><div class="vm-swatch" style="background:#3d5a3e;"></div><div class="vm-swatch" style="background:#5c4033;"></div><div class="vm-swatch" style="background:#722F37;"></div><div class="vm-swatch" style="background:#2c2c2c;"></div></div><div class="vm-item">5色深色单品矩阵</div><div class="vm-item">克制有层次的高级感</div></div><div class="vm-half"><div class="vm-title">下装 多维白主轴</div><div class="vm-swatch-row"><div class="vm-swatch" style="background:#f8f6f0;border:1px solid #ddd;"></div><div class="vm-swatch" style="background:#edeae3;border:1px solid #ddd;"></div><div class="vm-swatch" style="background:#f5f5f5;border:1px solid #ddd;"></div></div><div class="vm-item">防水防脏纳米涂层</div><div class="vm-item">果岭映衬极挺拔</div></div></div></div></div>
+    <div class="opt" onclick="sel(this,'q_vm')"><div class="oc"></div><div class="ot">C &nbsp;授权设计师自由发挥</div><div class="od">由总设计师根据春城会所建筑光影与陈列空间进行视觉提案</div></div>
+  </div>
+</div>
+
+<div class="sec">
+  <div class="sec-label">三 / 男款上衣色系矩阵（可多选）</div>
+  <div class="q">同一改良版型，意向哪些色系单品？</div>
+  <div class="color-matrix" id="color-men">
+    <div class="color-card" onclick="chip2(this)"><div class="cc"></div><div class="color-name"><span class="color-dot" style="background:#1a2744;"></span>阳宗海暮色蓝</div><span class="color-sub">低饱和冷调 · 经典老钱风</span></div>
+    <div class="color-card" onclick="chip2(this)"><div class="cc"></div><div class="color-name"><span class="color-dot" style="background:#4a6741;"></span>高原橄榄绿渐进</div><span class="color-sub">浅橄榄→深苔藓 · 奥杜邦生态</span></div>
+    <div class="color-card" onclick="chip2(this)"><div class="cc"></div><div class="color-name"><span class="color-dot" style="background:#8b6355;"></span>沙滩棕 & 高级中性</div><span class="color-sub">尼克劳斯棕/燕麦色</span></div>
+    <div class="color-card" onclick="chip2(this)"><div class="cc"></div><div class="color-name"><span class="color-dot" style="background:#722F37;"></span>暮山茶红系</div><span class="color-sub">品牌核心色 · 高辨识度</span></div>
+    <div class="color-card" onclick="chip2(this)"><div class="cc"></div><div class="color-name"><span class="color-dot" style="background:#2c2c2c;"></span>碳灰 & 黑白极简</div><span class="color-sub">极简主义 · 全场景万能</span></div>
+    <div class="color-card" onclick="chip2(this)"><div class="cc"></div><div class="color-name">✦ &nbsp;设计师自由定制</div><span class="color-sub">独家定制5色渐进核心单品矩阵</span></div>
+  </div>
+</div>
+
+<div class="sec">
+  <div class="sec-label">四 / 材质底盘决策</div>
+  <div class="q">在预算范围内，更倾向哪种材质底盘？</div>
+  <div class="opts" data-g="q_material">
+    <div class="opt" onclick="selMat(this,'q_material')"><div class="oc"></div><div class="ot">A &nbsp;天然纤维主导</div><div class="mat-pill-row"><span class="mat-pill">Pima Cotton</span><span class="mat-pill">丝光棉</span><span class="mat-pill">天然哑光</span></div><div class="od">极致亲肤触感与天然哑光光泽。高频挥杆后抗皱性与速干性相对功能面料偏弱。</div><div class="mat-warn">⚠ 大量出汗后抗皱与速干能力低于化纤方案。</div></div>
+    <div class="opt" onclick="selMat(this,'q_material')"><div class="oc"></div><div class="ot">B &nbsp;合成纤维 / 高科技功能主导</div><div class="mat-pill-row"><span class="mat-pill">超细Polyester</span><span class="mat-pill">高密Nylon</span><span class="mat-pill">Spandex氨纶</span></div><div class="od">极致功能主义，四向高弹、瞬间排汗冰凉感。易带"化纤反光感"需做消光处理。</div><div class="mat-warn">⚠ 需指定消光级后整理工艺，否则与高奢定位产生落差。</div></div>
+    <div class="opt" onclick="selMat(this,'q_material')"><div class="oc"></div><div class="ot">C &nbsp;跨界平衡混纺面料 <span class="rec-tag">设计师推荐</span></div><div class="mat-pill-row"><span class="mat-pill">棉/莫代尔</span><span class="mat-pill">高密锦纶</span><span class="mat-pill">杜邦高弹氨纶</span><span class="mat-pill">华夫格肌理</span></div><div class="od">正面立体微空气华夫格肌理，天然棉感吸光彻底告别化纤反光；反面多孔吸湿速干层。</div><div class="sub-opts-wrap" id="mat-sub-c"><div style="font-size:11px;font-weight:700;color:#666;margin:9px 0 6px;letter-spacing:1px;">功能红线配置（可多选）</div><div class="sub-opts" id="mat-c-funcs"><div class="sub-chip" onclick="subChip(event,this)"><div class="sc"></div><div class="sl">立体空气微华夫格肌理</div><div class="sd">天然棉感吸光，细腻微阴影层，彻底告别化纤反光</div></div><div class="sub-chip" onclick="subChip(event,this)"><div class="sc"></div><div class="sl">纳米特氟龙隐形微涂层</div><div class="sd">超强防水防脏——露水稀泥一擦即净，白裤全天候洁净</div></div><div class="sub-chip" onclick="subChip(event,this)"><div class="sc"></div><div class="sl">高垂感与抗皱性</div><div class="sd">锦纶赋予时装级下垂重感，起坐挥杆绝不留死褶</div></div><div class="sub-chip" onclick="subChip(event,this)"><div class="sc"></div><div class="sl">动态张力空间</div><div class="sd">5%隐形高弹丝 + 裆部/膝盖三维工学动态解构，起蹲看线绝不紧绷</div></div></div></div></div>
+    <div class="opt" onclick="selMat(this,'q_material')"><div class="oc"></div><div class="ot">D &nbsp;授权设计师自由寻源</div><div class="mat-pill-row"><span class="mat-pill">全球顶级面料库</span><span class="mat-pill">跨界拼接提案</span></div><div class="od">由总设计师在全球顶级面料库中定向寻源，交付面料小样供实物确认后再定。</div></div>
+  </div>
+</div>
+
+<div class="sec">
+  <div class="sec-label">五 / 版型结构 & 隐形艺术彩蛋</div>
+  <div class="q">领型结构改良意向</div>
+  <div class="opts" data-g="q_collar">
+    <div class="opt" onclick="sel(this,'q_collar')"><div class="oc"></div><div class="ot">保留标准高尔夫POLO版型</div><div class="od">传统三粒扣翻领、袖口紧罗纹，偏向稳重成熟的球场官方感</div></div>
+    <div class="opt" onclick="sel(this,'q_collar')"><div class="oc"></div><div class="ot">引入轻正装改良结构 <span class="rec-tag">推荐</span></div><div class="od">硬挺一片领 + 全开襟/隐形门襟。扣上后领型挺拔，解开扣子呈现度假慵懒感</div></div>
+  </div>
+  <div style="margin-top:14px;">
+    <div class="q">肩型结构改良意向</div>
+    <div class="opts" data-g="q_shoulder">
+      <div class="opt" onclick="sel(this,'q_shoulder')"><div class="oc"></div><div class="ot">保留常规自然肩型</div><div class="od">顺应自然肩线，舒适包容，适合多种身形</div></div>
+      <div class="opt" onclick="sel(this,'q_shoulder')"><div class="oc"></div><div class="ot">引入一字正肩结构 <span class="rec-tag">推荐</span></div><div class="od">肩线水平延展，拉宽肩幅提升挺拔感，配合"上深下浅"呈现高奢时装轮廓感</div></div>
+    </div>
+  </div>
+  <div style="margin-top:14px;">
+    <div class="q">领后"隐形艺术彩蛋"确认</div>
+    <div class="birdie-preview"><div class="birdie-icon">🦢</div><div class="birdie-text-wrap"><div class="birdie-title">奥杜邦白鹭 Birdie 刺绣</div><div class="birdie-desc">正面100%隐形，立起衣领防晒时细节赫然呈现。象征幸运小鸟球（Birdie）的春城专属吉祥物。</div><div class="birdie-spec">≤2.5cm · 日本进口高密数控机绣 · 热压无感保护衬</div></div></div>
+    <div class="opts" data-g="q_birdie" style="margin-top:8px;">
+      <div class="opt" onclick="sel(this,'q_birdie')"><div class="oc"></div><div class="ot">✓ 同意此项设计</div><div class="od">采用日本进口高密数控机绣，内衬热压无感保护衬，保障体感丝滑与大货批量交付</div></div>
+      <div class="opt" onclick="sel(this,'q_birdie')"><div class="oc"></div><div class="ot">✗ 不同意此项设计</div><div class="od">保留常规领后品牌标识，不做隐藏彩蛋设计</div></div>
+    </div>
+  </div>
+</div>
+
+<div class="sec">
+  <div class="sec-label">六 / 客群画像 & 销售复盘</div>
+  <div class="q">春城核心客群结构比重</div>
+  <div class="hint">* 比重将直接影响版型松紧、色盘配置与SKU排布</div>
+  <div class="ratio-wrap">
+    <div class="ratio-title">长期固定会员（常驻/高频下场）</div>
+    <div class="ratio-desc">40–60岁 · 政商高管/企业主 · 偏好内敛得体、天然触感</div>
+    <div class="ratio-slider-row"><input type="range" min="0" max="100" value="60" id="ratioSlider" oninput="updateRatio(this.value)"><div class="ratio-val" id="ratioA">60%</div></div>
+    <div class="ratio-balance"><div class="rb-seg rb-seg-a" id="segA" style="flex:60"></div><div class="rb-seg rb-seg-b" id="segB" style="flex:40"></div></div>
+    <div class="rb-legend"><div class="rb-leg-item"><div class="rb-dot" style="background:#722F37"></div>长期会员 <strong id="legA" style="color:#722F37;margin-left:2px;">60%</strong></div><div class="rb-leg-item"><div class="rb-dot" style="background:#ccc"></div>临时访客 <strong id="legB" style="color:#666;margin-left:2px;">40%</strong></div></div>
+  </div>
+  <div class="persona-card" style="margin-top:8px;"><div class="pc-row"><div class="pc-half"><div class="pc-label">长期会员</div><div class="pc-item">40–60岁为主</div><div class="pc-item">政商高管/企业主</div><div class="pc-item">优雅松量版型</div><div class="pc-item">领后隐形彩蛋</div></div><div class="pc-half"><div class="pc-label">临时会员/访客</div><div class="pc-item">30–45岁为主</div><div class="pc-item">新贵/高阶白领</div><div class="pc-item">利落修身版型</div><div class="pc-item">强视觉出片感</div></div></div></div>
+  <div class="sub-label" style="margin-top:16px;">— 过往爆款核心驱动力（可多选）</div>
+  <div class="multi-opts" id="sales-win">
+    <div class="mopt" onclick="mchip(this)"><div class="mc"></div><div class="mt">极致面料体感</div><div class="md">长绒棉的舒适、透气吸湿极快——客人试穿即买单</div></div>
+    <div class="mopt" onclick="mchip(this)"><div class="mc"></div><div class="mt">尊贵设计细节</div><div class="md">有辨识度但克制的定制Logo，带有春城独特资产故事</div></div>
+    <div class="mopt" onclick="mchip(this)"><div class="mc"></div><div class="mt">万能场景匹配</div><div class="md">上深下白轻正装版型，打完球可直接穿去开董事会</div></div>
+    <div class="mopt" onclick="mchip(this)"><div class="mc"></div><div class="mt">销售价格</div><div class="md">定价具有竞争力，性价比感知强，客人主动推荐给球友</div></div>
+    <div class="mopt" onclick="mchipOther(this,'win-other-input')"><div class="mc"></div><div class="mt">其他</div><div class="md">请填写贵方观察到的其他爆款驱动因素</div></div>
+  </div>
+  <input class="other-input" id="win-other-input" type="text" placeholder="请输入其他驱动力...">
+  <div class="sub-label" style="margin-top:12px;">— 过往积压款核心痛点（可多选）</div>
+  <div class="multi-opts" id="sales-fail">
+    <div class="mopt" onclick="mchip(this)"><div class="mc"></div><div class="mt">色彩与印花过时</div><div class="md">大橙大绿、高饱和度拼色，产生"工作服感/陈旧感"</div></div>
+    <div class="mopt" onclick="mchip(this)"><div class="mc"></div><div class="mt">版型与工艺问题</div><div class="md">洗几次就塌领松垮、裤管无垂感、下蹲看线时紧绷</div></div>
+    <div class="mopt" onclick="mchip(this)"><div class="mc"></div><div class="mt">化纤塑料感重</div><div class="md">纯涤纶面料阳光下反光明显，视觉显廉价</div></div>
+    <div class="mopt" onclick="mchipOther(this,'fail-other-input')"><div class="mc"></div><div class="mt">其他</div><div class="md">请填写贵方遇到的其他积压原因</div></div>
+  </div>
+  <input class="other-input" id="fail-other-input" type="text" placeholder="请输入其他痛点...">
+  <div class="sub-label" style="margin-top:12px;">— 季度数据反哺机制</div>
+  <div class="protocol-card">
+    <div class="proto-title"><svg width="13" height="13" viewBox="0 0 14 14" fill="none"><circle cx="7" cy="7" r="6" stroke="#722F37" stroke-width="1.2"/><path d="M7 4v3.5l2 1.5" stroke="#722F37" stroke-width="1.2" stroke-linecap="round"/></svg>销售数据反哺设计机制</div>
+    <div class="proto-step"><div class="proto-num">1</div><div class="proto-text">基础款上线后，追踪<strong>长期会员 vs 临时访客</strong>实际购买比例</div></div>
+    <div class="proto-step"><div class="proto-num">2</div><div class="proto-text">临时访客购买率↑ → 下季调高<strong>橄榄绿等潮流渐进色</strong>SKU占比</div></div>
+    <div class="proto-step" style="margin-bottom:0;"><div class="proto-num">3</div><div class="proto-text">长期会员复购率↑ → 深化<strong>多维白下装与高定面料工艺</strong>研发</div></div>
+    <div class="proto-agree" id="protoAgree" onclick="toggleProto()"><div class="proto-cb"></div><div class="proto-agree-text">同意引入此机制，授权设计团队依零售数据动态微调下季设计大盘</div></div>
+  </div>
+</div>
+
+<div class="sec">
+  <div class="sec-label">七 / 财务预算 & 采购模式</div>
+  <div class="q">单件核心Polo衫目标出厂供货价定位</div>
+  <div class="opts" data-g="q_price_tier">
+    <div class="opt" onclick="sel(this,'q_price_tier')"><div class="oc"></div><div class="ot">A &nbsp;基础实用区间</div><div class="od">聚焦功能性，适合大批量礼赠与日常场景</div></div>
+    <div class="opt" onclick="sel(this,'q_price_tier')"><div class="oc"></div><div class="ot">B &nbsp;中端品质区间 <span class="rec-tag">推荐</span></div><div class="od">兼顾面料科技感与品牌商务质感的最优性价比区间</div></div>
+    <div class="opt" onclick="sel(this,'q_price_tier')"><div class="oc"></div><div class="ot">C &nbsp;高端奢华区间</div><div class="od">非遗工艺全配置，高奢礼盒包装，VIP限量发售场景</div></div>
+  </div>
+  <div style="margin-top:12px;">
+    <div class="q" style="margin-bottom:8px;">商业采购与特许模式意向</div>
+    <div class="opts" data-g="q_biz">
+      <div class="opt" onclick="sel(this,'q_biz')"><div class="oc"></div><div class="ot">常规买断模式</div><div class="od">由春城高尔夫按大货出厂基础价全额采购入库</div></div>
+      <div class="opt" onclick="sel(this,'q_biz')"><div class="oc"></div><div class="ot">特许经营代销模式（Concession）</div><div class="od">我方全额负责前置设计、打样及库存资产，按Pro Shop实际营业流水阶梯式提成</div></div>
+      <div class="opt" onclick="sel(this,'q_biz')"><div class="oc"></div><div class="ot">双轨制组合方案 <span class="rec-tag">推荐</span></div><div class="od">根据单品属性提供"常规采购买断＋特许代销分成"双轨制商业组合</div></div>
+    </div>
+  </div>
+  <div style="margin-top:12px;">
+    <div class="q" style="margin-bottom:8px;">总预算范围（含R&D+BOM+CMT+包装）</div>
+    <div class="opts" data-g="q_budget">
+      <div class="opt" onclick="sel(this,'q_budget')"><div class="oc"></div><div class="ot">¥150,000 以内</div><div class="od">小批量首单，聚焦2–3个核心品类</div></div>
+      <div class="opt" onclick="sel(this,'q_budget')"><div class="oc"></div><div class="ot">¥150,000 – ¥300,000</div><div class="od">标准系列首发，覆盖6–8个核心SKU</div></div>
+      <div class="opt" onclick="sel(this,'q_budget')"><div class="oc"></div><div class="ot">¥300,000 – ¥500,000</div><div class="od">全系列打样+批量备货，支持开模及非遗工艺投入</div></div>
+      <div class="opt" onclick="sel(this,'q_budget')"><div class="oc"></div><div class="ot">¥500,000 以上</div><div class="od">旗舰级投入，全SKU覆盖+高奢包装+限量礼盒发售</div></div>
+    </div>
+  </div>
+</div>
+
+<div class="signature-block">
+  <div class="sig-label">Designed & Curated by</div>
+  <div class="sig-name">Seraphina Xian</div>
+  <div class="sig-line"></div>
+  <div class="sig-title">主设计师兼创意总监<br>Principal Designer & Creative Director</div>
+</div>
+
+<div class="sec" style="padding-bottom:0;margin-top:20px;">
+  <button class="submit-btn" id="submitBtn" onclick="doSubmit()">提交确认单 · 自动发送至设计团队 →</button>
+  <p style="font-size:11px;color:#888;text-align:center;margin-top:8px;">提交后结果将自动发送至设计方邮箱</p>
+  <div class="email-status" id="emailStatus" style="display:none;"></div>
+</div>
+</div></div>
+
+<div class="success" id="successScreen">
+  <div class="body-pad">
+    <div class="result-hdr">
+      <div class="result-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><polyline points="4,12 9,17 20,6" stroke="#722F37" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+      <div style="font-size:16px;font-weight:700;margin-bottom:5px;color:#1a1a1a;">确认单已提交</div>
+      <div style="font-size:12px;color:#666;line-height:1.7;" id="successNote">结果已发送至设计团队邮箱<br>以下为完整决策摘要留存</div>
+    </div>
+    <div class="result-box" id="resultBox"></div>
+    <div class="alert-box" id="alertBox"></div>
+    <button class="back-btn" onclick="goBack()">← 修改答案</button>
+  </div>
+</div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+<script>
+emailjs.init('UYsxdgaBmjPTFsonh');
+function updateRatio(v){v=parseInt(v);document.getElementById('ratioA').textContent=v+'%';document.getElementById('legA').textContent=v+'%';document.getElementById('legB').textContent=(100-v)+'%';document.getElementById('segA').style.flex=v;document.getElementById('segB').style.flex=(100-v);}
+function sel(el,g){document.querySelectorAll('.opts[data-g="'+g+'"] .opt').forEach(o=>o.classList.remove('sel'));el.classList.add('sel');}
+function selMat(el,g){document.querySelectorAll('.sub-opts-wrap').forEach(w=>w.classList.remove('open'));document.querySelectorAll('.opts[data-g="'+g+'"] .opt').forEach(o=>o.classList.remove('sel'));el.classList.add('sel');const sub=el.querySelector('.sub-opts-wrap');if(sub)sub.classList.add('open');}
+function subChip(e,el){e.stopPropagation();el.classList.toggle('sel');}
+function chip2(el){el.classList.toggle('sel');}
+function mchip(el){el.classList.toggle('sel');}
+function mchipOther(el,inputId){el.classList.toggle('sel');const inp=document.getElementById(inputId);inp.classList.toggle('show',el.classList.contains('sel'));if(!el.classList.contains('sel'))inp.value='';}
+function toggleProto(){document.getElementById('protoAgree').classList.toggle('sel');}
+function getVal(g){const el=document.querySelector('.opts[data-g="'+g+'"] .opt.sel .ot');return el?el.innerText.replace(/设计师推荐|推荐/g,'').trim():'（未选择）';}
+function getChips2(id){const cs=document.querySelectorAll('#'+id+' .color-card.sel .color-name');return cs.length?Array.from(cs).map(c=>c.innerText.replace(/[\u2726\s]+/g,'').trim()).join('、'):'（未选择）';}
+function getMopts(id,otherId){const cs=document.querySelectorAll('#'+id+' .mopt.sel .mt');let items=cs.length?Array.from(cs).map(c=>c.innerText):[];if(otherId){const inp=document.getElementById(otherId);if(inp&&inp.classList.contains('show')&&inp.value.trim()){items=items.filter(i=>i!=='其他');items.push('其他：'+inp.value.trim());}}return items.length?items.join('、'):'（未选择）';}
+function getSubChips(id){const cs=document.querySelectorAll('#'+id+' .sub-chip.sel .sl');return cs.length?Array.from(cs).map(c=>c.innerText).join('、'):'（未选择）';}
+async function doSubmit(){
+  const btn=document.getElementById('submitBtn'),statusEl=document.getElementById('emailStatus');
+  btn.textContent='提交中...';btn.disabled=true;
+  statusEl.style.display='block';statusEl.className='email-status sending';statusEl.textContent='正在发送邮件...';
+  const ratioA=document.getElementById('ratioSlider').value,ratioB=100-parseInt(ratioA);
+  const material=getVal('q_material'),matFuncs=getSubChips('mat-c-funcs'),salesFail=getMopts('sales-fail','fail-other-input'),vm=getVal('q_vm');
+  const now=new Date(),timeStr=now.getFullYear()+'-'+String(now.getMonth()+1).padStart(2,'0')+'-'+String(now.getDate()).padStart(2,'0')+' '+String(now.getHours()).padStart(2,'0')+':'+String(now.getMinutes()).padStart(2,'0');
+  const reportText='【SKU开发体量】\n系列规模：'+getVal('q_look')+'\n\n【视觉陈列调性】\nVM定位：'+vm+'\n男款色系：'+getChips2('color-men')+'\n\n【版型结构】\n领型：'+getVal('q_collar')+'\n肩型：'+getVal('q_shoulder')+'\n领后彩蛋：'+(getVal('q_birdie').includes('同意')?'✓ 奥杜邦白鹭Birdie刺绣':'✗ 不采用')+'\n\n【材质决策】\n材质底盘：'+material+(material.includes('C')&&matFuncs!=='（未选择）'?'\n功能红线：'+matFuncs:'')+'\n\n【客群画像】\n长期会员占比：'+ratioA+'%\n临时访客占比：'+ratioB+'%\n爆款驱动力：'+getMopts('sales-win','win-other-input')+'\n积压痛点：'+salesFail+'\n数据反哺机制：'+(document.getElementById('protoAgree').classList.contains('sel')?'✓ 已授权引入':'未启用')+'\n\n【财务框架】\n出厂价定位：'+getVal('q_price_tier')+'\n采购模式：'+getVal('q_biz')+'\n总预算：'+getVal('q_budget');
+  try{
+    await emailjs.send('service_a45kefo','template_0sfoqhy',{name:'春城高尔夫管理团队',email:'nancyxian2023@gmail.com',message:reportText,submit_time:timeStr});
+    statusEl.className='email-status ok';statusEl.textContent='✓ 邮件已成功发送至 nancyxian2023@gmail.com';
+    document.getElementById('successNote').textContent='结果已发送至 nancyxian2023@gmail.com\n以下为完整决策摘要留存';
+  }catch(e){statusEl.className='email-status fail';statusEl.textContent='邮件发送失败（'+(e.text||e)+'），摘要已在下方生成';}
+  const matRow=material.includes('C')&&matFuncs!=='（未选择）'?[['材质底盘',material],['功能红线',matFuncs]]:[['材质底盘',material]];
+  const sections=[{title:'SKU开发体量',rows:[['系列规模',getVal('q_look')]]},{title:'视觉陈列调性',rows:[['VM定位',vm],['男款色系',getChips2('color-men')]]},{title:'版型结构',rows:[['领型',getVal('q_collar')],['肩型',getVal('q_shoulder')],['领后彩蛋',getVal('q_birdie').includes('同意')?'✓ 白鹭刺绣':'✗ 不采用']]},{title:'材质决策',rows:matRow},{title:'客群画像',rows:[['长期会员',ratioA+'%'],['临时访客',ratioB+'%'],['爆款驱动力',getMopts('sales-win','win-other-input')],['积压痛点',salesFail],['数据反哺',document.getElementById('protoAgree').classList.contains('sel')?'✓ 已授权':'未启用']]},{title:'财务框架',rows:[['出厂价定位',getVal('q_price_tier')],['采购模式',getVal('q_biz')],['总预算',getVal('q_budget')]]}];
+  let html='';sections.forEach(s=>{html+='<div class="rb-section">'+s.title+'</div>';s.rows.forEach(([k,v])=>{html+='<div class="rb-row"><span class="rb-k">'+k+'</span><span class="rb-v">'+v+'</span></div>';});});
+  document.getElementById('resultBox').innerHTML=html;
+  let alerts=[];
+  if(material.includes('B')&&salesFail.includes('化纤')) alerts.push('⚠️ <strong>历史痛点复现风险：</strong>过往积压款已标注化纤塑料感为核心痛点，当前材质选B存在重蹈覆辙风险，建议切换至混纺方案C。');
+  if(material.includes('A')&&vm.includes('现代时髦')) alerts.push('⚠️ <strong>材质与陈列逻辑冲突：</strong>"上深下浅"高奢VM需要下装具备超强防水防脏性能，天然纤维方案A无法满足，建议升级至C方案。');
+  if(parseInt(ratioA)>=70&&vm.includes('时髦')) alerts.push('💡 <strong>客群与陈列提示：</strong>长期会员占比达'+ratioA+'%，建议VM以"克制时髦"为基调，避免过度潮流化。');
+  if(parseInt(ratioA)<=30) alerts.push('💡 <strong>访客占比较高：</strong>建议增设1–2个强出片感单品，有效捕捉访客即时消费冲动。');
+  if(!alerts.length) alerts.push('✅ <strong>决策组合高度一致：</strong>VM调性、材质底盘、客群画像与财务框架全面对齐，设计团队将立即启动3D图包定向输出。');
+  document.getElementById('alertBox').innerHTML=alerts.join('<br><br>');
+  setTimeout(()=>{document.getElementById('mainForm').classList.add('hide');document.getElementById('successScreen').classList.add('show');btn.textContent='提交确认单 · 自动发送至设计团队 →';btn.disabled=false;},600);
+}
+function goBack(){document.getElementById('mainForm').classList.remove('hide');document.getElementById('successScreen').classList.remove('show');}
+</script>
+</body>
+</html>
