@@ -424,7 +424,7 @@ async function doSubmit(){
   const timeStr=`${now.getFullYear()}-${String(now.getMonth()+1).padStart(2,'0')}-${String(now.getDate()).padStart(2,'0')} ${String(now.getHours()).padStart(2,'0')}:${String(now.getMinutes()).padStart(2,'0')}`;
   const reportText=`【SKU开发体量】\n系列规模：${getVal('q_look')}\n\n【视觉陈列调性】\nVM定位：${vm}\n男款色系：${getChips2('color-men')}\n\n【版型结构】\n领型：${getVal('q_collar')}\n肩型：${getVal('q_shoulder')}\n领后彩蛋：${getVal('q_birdie').includes('同意')?'✓ 奥杜邦白鹭Birdie刺绣':'✗ 不采用'}\n\n【材质决策】\n材质底盘：${material}${material.includes('C')&&matFuncs!=='（未选择）'?'\n功能红线：'+matFuncs:''}\n\n【客群画像】\n长期会员占比：${ratioA}%\n临时访客占比：${ratioB}%\n爆款驱动力：${getMopts('sales-win','win-other-input')}\n积压痛点：${salesFail}\n数据反哺机制：${document.getElementById('protoAgree').classList.contains('sel')?'✓ 已授权引入':'未启用'}\n\n【财务框架】\n出厂价定位：${getVal('q_price_tier')}\n采购模式：${getVal('q_biz')}\n总预算：${getVal('q_budget')}`;
   try{
-    await emailjs.send('service_a45kefo','template_95n7kql',{name:'春城高尔夫管理团队',email:'nancyxian2023@gmail.com',message:reportText,submit_time:timeStr});
+    await emailjs.send('service_a45kefo','template_0sfoqhy',{name:'春城高尔夫管理团队',email:'nancyxian2023@gmail.com',message:reportText,submit_time:timeStr});
     statusEl.className='email-status ok';statusEl.textContent='✓ 邮件已成功发送至 nancyxian2023@gmail.com';
     document.getElementById('successNote').textContent='结果已发送至 nancyxian2023@gmail.com\n以下为完整决策摘要留存';
   }catch(e){
